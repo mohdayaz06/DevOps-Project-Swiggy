@@ -1,3 +1,4 @@
+root@ip-172-31-37-218:/home/ubuntu/DevOps-Project-Swiggy/ArgoCD# cat deployment.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,3 +22,17 @@ spec:
         imagePullPolicy: "Always"
         ports:
         - containerPort: 3000
+
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
